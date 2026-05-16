@@ -4,7 +4,7 @@
 
 This project demonstrates an AWS automation workflow using EC2, S3, DynamoDB, IAM, SNS, AWS CLI, jq, and Shell scripting.
 
-The main goal of this project is to generate multiple JSON files automatically, upload them to an S3 bucket, load the JSON data into a DynamoDB table, and trigger an SNS email notification when a new JSON file is uploaded to S3.
+The goal of this project is to generate multiple JSON files automatically, upload them to an S3 bucket, load the JSON data into a DynamoDB table, and trigger an SNS email notification whenever a new JSON file is uploaded to S3.
 
 ---
 
@@ -79,23 +79,19 @@ aws-json-s3-dynamodb-project/
 
 Created an S3 bucket to store the generated JSON files.
 
-Bucket name used:
+Bucket name:
 
 ```text
 prathyusha-json-dynamodb-project
 ```
 
-Region used:
+Region:
 
 ```text
 eu-north-1
 ```
 
-Screenshot:
-
-```text
-screenshots/07-s3-bucket-created.png
-```
+![S3 Bucket Created](screenshots/07-s3-bucket-created.png)
 
 ---
 
@@ -116,12 +112,9 @@ Partition key: PK
 Sort key: SK
 ```
 
-Screenshots:
+![DynamoDB Table Created](screenshots/10-dynamodb-table-created.png)
 
-```text
-screenshots/10-dynamodb-table-created.png
-screenshots/11-dynamodb-table-schema.png
-```
+![DynamoDB Table Schema](screenshots/11-dynamodb-table-schema.png)
 
 ---
 
@@ -143,30 +136,19 @@ AmazonDynamoDBFullAccess
 AmazonSNSFullAccess
 ```
 
-Screenshots:
+![EC2 IAM Role Attached](screenshots/02-ec2-iam-role-attached.png)
 
-```text
-screenshots/02-ec2-iam-role-attached.png
-screenshots/03-iam-role-permissions.png
-```
+![IAM Role Permissions](screenshots/03-iam-role-permissions.png)
 
-Note:
-
-For this learning project, AWS managed policies were used. In a production environment, least-privilege IAM permissions should be used instead of full-access policies.
+Note: For this learning project, AWS managed policies were used. In production, least-privilege IAM permissions should be used instead of full-access policies.
 
 ---
 
 ## Step 4: Launched EC2 Instance
 
-Launched an Amazon Linux EC2 instance and used it to run shell scripts.
+Launched an Amazon Linux EC2 instance and used it as the automation server to run shell scripts.
 
-The EC2 instance was used as the automation server for generating JSON files, uploading them to S3, and loading them into DynamoDB.
-
-Screenshot:
-
-```text
-screenshots/01-ec2-instance-running.png
-```
+![EC2 Instance Running](screenshots/01-ec2-instance-running.png)
 
 ---
 
@@ -223,7 +205,7 @@ The script creates a folder named:
 generated_files
 ```
 
-It then generates JSON files like:
+It generates files like:
 
 ```text
 item_prd1001.json
@@ -233,13 +215,11 @@ item_prd1003.json
 item_prd1100.json
 ```
 
-Screenshots:
+![Project Files in EC2](screenshots/04-project-files-in-ec2.png)
 
-```text
-screenshots/04-project-files-in-ec2.png
-screenshots/05-generated-json-files.png
-screenshots/06-sample-json-file-content.png
-```
+![Generated JSON Files](screenshots/05-generated-json-files.png)
+
+![Sample JSON File Content](screenshots/06-sample-json-file-content.png)
 
 ---
 
@@ -259,18 +239,15 @@ Command used:
 ./copy_data_from_ec2_s3.sh
 ```
 
-The files were uploaded to:
+Files were uploaded to:
 
 ```text
 s3://prathyusha-json-dynamodb-project/json/
 ```
 
-Screenshots:
+![S3 JSON Folder](screenshots/08-s3-json-folder.png)
 
-```text
-screenshots/08-s3-json-folder.png
-screenshots/09-s3-uploaded-json-files.png
-```
+![S3 Uploaded JSON Files](screenshots/09-s3-uploaded-json-files.png)
 
 ---
 
@@ -315,12 +292,9 @@ Expected result:
 Count: 100
 ```
 
-Screenshots:
+![DynamoDB Items Loaded](screenshots/12-dynamodb-items-loaded.png)
 
-```text
-screenshots/12-dynamodb-items-loaded.png
-screenshots/13-dynamodb-count-100.png
-```
+![DynamoDB Count 100](screenshots/13-dynamodb-count-100.png)
 
 ---
 
@@ -340,18 +314,15 @@ SNS topic ARN:
 arn:aws:sns:eu-north-1:434978747349:Mytopic
 ```
 
-Screenshots:
+![SNS Topic Created](screenshots/14-sns-topic-created.png)
 
-```text
-screenshots/14-sns-topic-created.png
-screenshots/15-sns-subscription-confirmed.png
-```
+![SNS Subscription Confirmed](screenshots/15-sns-subscription-confirmed.png)
 
 ---
 
 ## Step 10: Configured S3 Event Notification
 
-Configured an S3 event notification to trigger SNS when a new JSON file is uploaded to the `json/` folder.
+Configured an S3 event notification to trigger SNS whenever a new JSON file is uploaded to the `json/` folder.
 
 Configuration used:
 
@@ -364,12 +335,9 @@ Destination: SNS Topic
 
 When a new JSON file is uploaded to S3, SNS sends an email notification.
 
-Screenshots:
+![S3 Event Notification Configured](screenshots/16-s3-event-notification-configured.png)
 
-```text
-screenshots/16-s3-event-notification-configured.png
-screenshots/17-sns-email-notification-received.png
-```
+![SNS Email Notification Received](screenshots/17-sns-email-notification-received.png)
 
 ---
 
@@ -461,12 +429,9 @@ aws sns publish \
   --message "Direct SNS test from EC2 after permission fix"
 ```
 
-Screenshots:
+![SNS Permission Added](screenshots/18-troubleshooting-sns-permission-added.png)
 
-```text
-screenshots/18-troubleshooting-sns-permission-added.png
-screenshots/19-troubleshooting-sns-publish-success.png
-```
+![SNS Publish Success](screenshots/19-troubleshooting-sns-publish-success.png)
 
 ---
 
@@ -519,4 +484,3 @@ To avoid unnecessary AWS charges, the following resources should be deleted afte
 - DynamoDB table
 - SNS topic and subscription
 - IAM role if no longer needed
-EOF
