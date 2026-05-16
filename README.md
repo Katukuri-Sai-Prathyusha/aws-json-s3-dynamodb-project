@@ -475,12 +475,3 @@ IAM roles are used to securely give EC2 access to S3, DynamoDB, and SNS without 
 
 ---
 
-## Cleanup
-
-To avoid unnecessary AWS charges, the following resources should be deleted after completing the project documentation:
-
-- EC2 instance
-- S3 bucket objects and bucket
-- DynamoDB table
-- SNS topic and subscription
-- IAM role if no longer needed
